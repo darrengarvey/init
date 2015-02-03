@@ -1,0 +1,19 @@
+#!/bin/bash
+
+bashd_dir=$HOME/.bash.d
+
+if grep --quiet ". ${bashd_dir}/\$i" ~/.bashrc 2>/dev/null; then
+    printf " SKIPPED\n"
+    exit 77
+fi
+
+cat <<EOF >> $HOME/.bashrc
+
+# User specific aliases and functions
+if [[ -d ${bashd_dir} && -r ${bashd_dir} && -x ${bashd_dir} ]]; then
+    for i in \$(LC_ALL=C command ls ${bashd_dir}); do
+        . ${bashd_dir}/\$i
+    done
+fi
+EOF
+
