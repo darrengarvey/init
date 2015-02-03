@@ -1,0 +1,11 @@
+
+# Git aliases
+alias gg="git grep -n"
+alias ga="git add"
+alias gs="git status"
+alias gd="git diff"
+alias gdc="git diff --cached"
+alias gc="git commit"
+alias gmt="git mergetool"
+alias gcp="git cherry-pick"
+alias gpw="gitk_push_what"

@@ -1,0 +1,38 @@
+
+# Git functions
+gitk_push_what() {
+	gitk "$(git push -n 2>&1 | tail -1 | cut -f4 -d' ')"
+}
+
+# Hex / Decimal conversions
+h2d(){
+    echo "ibase=16; $@"|bc
+}
+
+d2h(){
+    echo "obase=16; $@"|bc
+}
+
+psgrep() {
+    ps auxf | grep -v grep | grep --color=always "$@"
+}
+
+fname() {
+    find . -iname "*$@*";
+}
+
+mcd() {
+    mkdir $1 && cd $1;
+}
+
+# scp a file somewhere, via an intermediate host.
+scp_via() {
+
+    local intermediate_host=$1
+    local filename=$2
+    # eg. root@some-host:/tmp/
+    local remote_destination=$3
+
+    scp -oProxyCommand="ssh $intermediate_host nc -v %h %p" "$filename" "$remote_destination"
+
+}

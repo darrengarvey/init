@@ -1,0 +1,5 @@
+# Fixup for bash > 4.2 which kinda broke bash-completion when using environment
+# variables. See:
+# http://askubuntu.com/questions/41891/bash-auto-complete-for-environment-variables
+shopt -s direxpand
+
