@@ -25,6 +25,11 @@ mcd() {
     mkdir $1 && cd $1;
 }
 
+msg() {
+    local numlines="${1:-50}"
+    dmesg --color=always -T | tail -$numlines
+}
+
 # scp a file somewhere, via an intermediate host.
 scp_via() {
 
@@ -35,4 +40,13 @@ scp_via() {
 
     scp -oProxyCommand="ssh $intermediate_host nc -v %h %p" "$filename" "$remote_destination"
 
+}
+
+pp() {
+    python -c "print (${@})"
+}
+
+docker-clean-old-imgs() {
+    old_imgs="$(docker images | awk '/^<none>/ { print $3 }')"
+    [ -n "${old_imgs}" ] && docker rmi ${old_imgs}
 }

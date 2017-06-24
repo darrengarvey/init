@@ -1,5 +1,21 @@
 
-export TERM=xterm-color
+# Readline history control
+export HISTCONTROL=ignoredups:erasedups
+export HISTSIZE=100000
+export HISTFILESIZE=100000
+shopt -s histappend
+
+export TERM=xterm-256color
+export PAGER=most
 export EDITOR=/usr/bin/vim
 export EMACS=no
+export GOPATH=$HOME/gocode
+export PATH=~/bin:~/.local/bin:$GOPATH/bin:$PATH
 
+# readline completion for python interpreter
+[ -f ~/bin/python-startup.py ] && {
+    export PYTHONSTARTUP=~/bin/python-startup.py
+}
+
+# Set up SSH convenience
+eval $(keychain --eval --quiet)
