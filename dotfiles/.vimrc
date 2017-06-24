@@ -16,11 +16,13 @@ call plug#begin('~/.vim/plugged')
     Plug 'mattn/emmet-vim'
     Plug 'majutsushi/tagbar'
     Plug 'mcandre/Conque-Shell'
+    Plug 'nvie/vim-flake8'
     Plug 'pangloss/vim-javascript'
     Plug 'plasticboy/vim-markdown'
     Plug 'scrooloose/nerdtree'
     Plug 'Shougo/vimproc.vim', { 'do': 'make' }
     Plug 'terryma/vim-expand-region'
+    Plug 'tmhedberg/SimpylFold'
     Plug 'tomasr/molokai'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-sensible'
@@ -37,24 +39,39 @@ call plug#end()
 
 let mapleader = "\<Space>"
 
+nnoremap <leader>h :nohlsearch<CR>
+
 " Shortcuts for quick navigating
 nnoremap <silent> <leader>k :BufExplorer<CR>
 nnoremap <silent> <leader>o :CtrlP<CR>
 nnoremap <silent> <leader>w :w<CR>
 nnoremap <leader>b :buffers<CR>:buffer<SPACE>
 nnoremap <leader>d :NERDTreeTabsToggle<CR>
+nnoremap <C-tab> :tabn<CR>
 nnoremap <leader>n :tabn<CR>
+nnoremap <C-S-tab> :tabp<CR>
 nnoremap <leader>p :tabp<CR>
+nnoremap <A-left> :tabmove -1<CR>
+nnoremap <A-right> :tabmove +1<CR>
 let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
+" Split in the correct place...
+set splitbelow
+set splitright
+" And sensible navigating between splits
+nnoremap <C-j> <C-w><C-h>
+nnoremap <C-k> <C-w><C-k>
+nnoremap <C-l> <C-w><C-l>
+nnoremap <C-h> <C-w><C-h>
+
 " Copy/paste
-vmap <Leader>y "+y
-vmap <Leader>d "+d
-nmap <Leader>p "+p
-nmap <Leader>P "+P
-vmap <Leader>p "+p
-vmap <Leader>P "+P
+vmap <leader>y "+y
+vmap <leader>d "+d
+nmap <leader>p "+p
+nmap <leader>P "+P
+vmap <leader>p "+p
+vmap <leader>P "+P
 " Selecting regions
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
@@ -64,6 +81,12 @@ syntax enable
 
 " Enable filetype detection
 filetype plugin indent on
+
+" Folding
+set foldmethod=indent
+set foldlevel=99
+nnoremap <leader>f za
+let g:SimpylFold_docstring_preview=1
 
 " Hack to make the status line always show
 set laststatus=2
@@ -145,6 +168,7 @@ nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 " Options for NERDTree tabs
 " Open NERDTree on startup, but only when opening a directory
 let g:nerdtree_tabs_open_on_gui_startup = 2
+let NERDTreeIgnore = ['\.pyc$']
 " Options for syntastic
 let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 0
@@ -154,9 +178,12 @@ let g:syntastic_check_on_wq = 0
 " Options for CtrlP plugin
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+"let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+if executable('ag')
+    let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+endif
 " Use git to find files when we're in a git project
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+"let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 
 " Make :Explorer mode look like nerdtree
 let g:netrw_liststyle=3
@@ -177,9 +204,9 @@ highlight LongLine ctermbg=DarkYellow guibg=DarkYellow
 
 highlight WhitespaceEOL ctermbg=DarkYellow guibg=DarkYellow
 
-augroup filetype
-  au! BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
-augroup END
+"augroup filetype
+"  au! BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+"augroup END
 
 "if v:version >= 702
 "  " Lines longer than 80 columns.
