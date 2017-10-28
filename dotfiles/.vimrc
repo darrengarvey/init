@@ -4,7 +4,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'altercation/vim-colors-solarized'
     Plug 'bling/vim-airline'
     Plug 'ctrlpvim/ctrlp.vim'
-    Plug 'dkprice/vim-easygrep'
+    " Disabled; trying vim-grepper
+    "Plug 'dkprice/vim-easygrep'
     " Disabled, needs compiling
     "Plug 'jeaye/color_coded'
     Plug 'jistr/vim-nerdtree-tabs'
@@ -16,7 +17,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'mattn/emmet-vim'
     Plug 'majutsushi/tagbar'
     Plug 'mcandre/Conque-Shell'
+    Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
     Plug 'nvie/vim-flake8'
+    Plug 'othree/html5.vim'
     Plug 'pangloss/vim-javascript'
     Plug 'plasticboy/vim-markdown'
     Plug 'scrooloose/nerdtree'
@@ -30,6 +33,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'Valloric/ListToggle'
     Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
     Plug 'vim-scripts/indentpython.vim'
+    Plug 'vim-scripts/taglist.vim'
     Plug 'vim-scripts/ZoomWin'
     Plug 'vim-syntastic/syntastic'
     Plug 'xolox/vim-easytags'
@@ -55,6 +59,8 @@ nnoremap <A-left> :tabmove -1<CR>
 nnoremap <A-right> :tabmove +1<CR>
 let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" Motions to move between words stops at hyphens
+"set iskeyword+=-
 
 " Split in the correct place...
 set splitbelow
@@ -65,6 +71,14 @@ nnoremap <C-k> <C-w><C-k>
 nnoremap <C-l> <C-w><C-l>
 nnoremap <C-h> <C-w><C-h>
 
+" Taglist
+nnoremap <leader>t :TlistToggle<CR>
+let Tlist_GainFocus_On_ToggleOpen = 1
+let Tlist_Exit_OnlyWindow = 1
+let Tlist_Close_On_Select = 1
+" Speed up easytags
+let g:easytags_async=1
+
 " Copy/paste
 vmap <leader>y "+y
 vmap <leader>d "+d
@@ -73,6 +87,8 @@ nmap <leader>P "+P
 vmap <leader>p "+p
 vmap <leader>P "+P
 " Selecting regions
+map K <Plug>(expand_region_expand)
+"map J <Plug>(expand_region_shrink)
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
@@ -90,6 +106,9 @@ let g:SimpylFold_docstring_preview=1
 
 " Hack to make the status line always show
 set laststatus=2
+
+" CHECK: seem to speed things up a bit
+set lazyredraw nocuc nocul
 
 " Fix mouse interaction when running through screen
 set mouse=a
@@ -170,10 +189,13 @@ nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 let g:nerdtree_tabs_open_on_gui_startup = 2
 let NERDTreeIgnore = ['\.pyc$']
 " Options for syntastic
+let g:syntastic_enable_signs = 0
 let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
+nnoremap <C-w>E :SyntasticCheck<CR> :SyntasticToggleMode<CR>
 
 " Options for CtrlP plugin
 let g:ctrlp_map = '<c-p>'
@@ -259,6 +281,12 @@ augroup filetype
       \ tabstop=2
       \ softtabstop=2
       \ shiftwidth=2
+      \ textwidth=0
+augroup END
+
+augroup filetype
+  au! BufNewFile,BufRead *.tsv, *.csv set
+      \ textwidth=0
 augroup END
 
 " In Makefiles, don't expand tabs to spaces, since we need the actual tabs
