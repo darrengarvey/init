@@ -9,3 +9,17 @@ alias gc="git commit"
 alias gmt="git mergetool"
 alias gcp="git cherry-pick"
 alias gpw="gitk_push_what"
+
+# Docker aliases
+alias di='docker images'
+alias dl='docker ps -l -q'
+alias dps='docker ps'
+alias dkl='docker kill `dl`'
+alias del='docker exec -i -t `dl` /bin/bash'
+alias dlip='docker inspect --format="{{ .NetworkSettings.IPAddress }}" `dl`'
+alias drmc='docker rm $(docker ps -a -q)'
+alias drmi='docker rmi $(docker images -q)'
+
+# New Python virtual envs
+alias pyenv='virtualenv --python=$(which python) venv && source venv/bin/activate'
+alias pyenv2='virtualenv --python=python2 venv2 && source venv2/bin/activate'
