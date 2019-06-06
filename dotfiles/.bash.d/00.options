@@ -3,3 +3,6 @@
 # http://askubuntu.com/questions/41891/bash-auto-complete-for-environment-variables
 shopt -s direxpand
 
+__isMac() {
+  [[ "Darwin" == $(uname) ]]
+}

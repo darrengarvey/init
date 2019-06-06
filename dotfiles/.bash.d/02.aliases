@@ -23,3 +23,5 @@ alias drmi='docker rmi $(docker images -q)'
 # New Python virtual envs
 alias pyenv='virtualenv --python=$(which python) venv && source venv/bin/activate'
 alias pyenv2='virtualenv --python=python2 venv2 && source venv2/bin/activate'
+
+__isMac && alias ctags="`brew --prefix`/bin/ctags"
