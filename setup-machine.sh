@@ -1,6 +1,6 @@
 #!/bin/bash
 
-this_dir=$(dirname $(readlink -f $BASH_SOURCE))
+this_dir=$(dirname $BASH_SOURCE)
 
 # Run all of the executable scripts in ./setup.d/
 # NB. This script guarantees the scripts are run from the directory that
