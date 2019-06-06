@@ -57,7 +57,9 @@ nnoremap <C-S-tab> :tabp<CR>
 nnoremap <leader>p :tabp<CR>
 nnoremap <A-left> :tabmove -1<CR>
 nnoremap <A-right> :tabmove +1<CR>
-let g:ycm_autoclose_preview_window_after_completion=1
+let g:ycm_autoclose_preview_window_after_completion = 1
+" Hide built-in functions (eg. Python dunder functions)
+let g:ycm_seed_identifiers_with_syntax = 1
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " Motions to move between words stops at hyphens
 "set iskeyword+=-
