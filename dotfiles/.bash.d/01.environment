@@ -7,6 +7,10 @@ shopt -s histappend
 
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
+GIT_PS1_SHOWDIRTYSTATE=true
+export PS1='[\033[36m\]\w\033[32m\]$(__git_ps1)\[\033[m\]]\$ '
+export CLICOLOR=1
+export LSCOLORS=ExFxBxDxCxegedabagacad
 export TERM=xterm-256color
 export EDITOR=/usr/bin/vim
 export EMACS=no
