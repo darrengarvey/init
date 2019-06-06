@@ -8,7 +8,6 @@ shopt -s histappend
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
 export TERM=xterm-256color
-export PAGER=most
 export EDITOR=/usr/bin/vim
 export EMACS=no
 export GOPATH=$HOME/gocode
