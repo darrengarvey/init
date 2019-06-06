@@ -24,3 +24,6 @@ export PATH=~/bin:~/.local/bin:$GOPATH/bin:$PATH
 
 # Set up SSH convenience
 [ -n "$(pidof ssh-agent)" ] || eval $(ssh-agent -s)
+if __isMac; then
+    export PATH="$HOME/Library/Python/3.7/bin/:/usr/local/Cellar/perl/5.28.2/bin:$PATH"
+fi
